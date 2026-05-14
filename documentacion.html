@@ -118,21 +118,22 @@
 <!-- CÓMO FUNCIONA -->
 <section>
   <h2><span class="icon">⚙️</span> Cómo funciona</h2>
-  <p>El bot opera en cuatro módulos que se comunican entre sí:</p>
+  <p>El bot opera en cinco módulos que se comunican entre sí:</p>
   <div class="arch">
     <span class="layer">Emulador Android</span> (BlueStacks / Nox / AVD)<br>
     ↕ ADB (Android Debug Bridge)<br>
     <span class="layer">ADBController</span> ↔ <span class="layer">Vision (OpenCV)</span><br>
     ↕<br>
-    <span class="layer">BotTasks</span> (lógica de rutinas)<br>
+    <span class="layer">BotTasks</span> · <span class="layer">AccountSetup</span><br>
     ↕<br>
     <span class="layer">main.py</span> (menú interactivo)
   </div>
   <div class="grid2" style="margin-top:16px">
-    <div class="card"><h4>🎮 ADBController</h4><p>Se comunica con el emulador: toma capturas, realiza taps y swipes.</p></div>
+    <div class="card"><h4>🎮 ADBController</h4><p>Se comunica con el emulador: toma capturas, taps, swipes, texto e inicio de apps.</p></div>
     <div class="card"><h4>👁️ Vision</h4><p>Usa OpenCV para buscar imágenes de referencia en la pantalla del emulador.</p></div>
-    <div class="card"><h4>🤖 BotTasks</h4><p>Contiene la lógica de cada rutina: farmeo de batallas y reclamar misiones.</p></div>
-    <div class="card"><h4>🖥️ main.py</h4><p>Punto de entrada con menú interactivo en consola para seleccionar tareas.</p></div>
+    <div class="card"><h4>🤖 BotTasks</h4><p>Rutinas de juego: farmeo de batallas, reclamar misiones y enlace de cuentas.</p></div>
+    <div class="card"><h4>🔑 AccountSetup</h4><p>Crea cuentas Google automáticamente y las vincula a Pokémon TCG Pocket.</p></div>
+    <div class="card" style="grid-column:span 2"><h4>🖥️ main.py</h4><p>Punto de entrada con menú interactivo en consola para seleccionar tareas.</p></div>
   </div>
 </section>
 
@@ -189,7 +190,7 @@ venv\Scripts\activate</code></pre>
     <div><p><strong>Consejo</strong>Recorta solo el botón, sin demasiado fondo alrededor. Un recorte limpio mejora mucho la precisión del bot.</p></div>
   </div>
 
-  <h3>Plantillas necesarias</h3>
+  <h3>Plantillas para farmeo y misiones</h3>
   <table>
     <tr><th>Archivo</th><th>Tarea</th><th>Qué capturar</th></tr>
     <tr><td><code>battle_btn.png</code></td><td>Farmeo</td><td>Botón para iniciar una batalla en solitario</td></tr>
@@ -198,6 +199,40 @@ venv\Scripts\activate</code></pre>
     <tr><td><code>next_btn.png</code></td><td>Farmeo</td><td>Botón "Siguiente" o "Continuar"</td></tr>
     <tr><td><code>missions_tab.png</code></td><td>Misiones</td><td>Pestaña/icono de Misiones en el menú principal</td></tr>
     <tr><td><code>claim_all_btn.png</code></td><td>Misiones</td><td>Botón "Reclamar Todo"</td></tr>
+  </table>
+
+  <h3>Plantillas para creación de cuenta Google</h3>
+  <table>
+    <tr><th>Archivo</th><th>Pantalla</th><th>Qué capturar</th></tr>
+    <tr><td><code>settings_accounts.png</code></td><td>Ajustes Android</td><td>Opción "Cuentas" dentro de Ajustes del sistema</td></tr>
+    <tr><td><code>add_account_btn.png</code></td><td>Ajustes → Cuentas</td><td>Botón "Añadir cuenta"</td></tr>
+    <tr><td><code>google_account_btn.png</code></td><td>Selector de proveedor</td><td>Icono/fila de Google en la lista de tipos de cuenta</td></tr>
+    <tr><td><code>create_account_btn.png</code></td><td>Sign-in Google</td><td>Enlace o botón "Crear cuenta"</td></tr>
+    <tr><td><code>for_myself_btn.png</code></td><td>Sign-in Google</td><td>Opción "Para mí" (puede no aparecer siempre)</td></tr>
+    <tr><td><code>first_name_field.png</code></td><td>Formulario nombre</td><td>Campo de texto "Nombre"</td></tr>
+    <tr><td><code>last_name_field.png</code></td><td>Formulario nombre</td><td>Campo de texto "Apellidos"</td></tr>
+    <tr><td><code>birthdate_day_field.png</code></td><td>Formulario fecha</td><td>Campo día de nacimiento</td></tr>
+    <tr><td><code>birthdate_month_field.png</code></td><td>Formulario fecha</td><td>Campo mes de nacimiento</td></tr>
+    <tr><td><code>birthdate_year_field.png</code></td><td>Formulario fecha</td><td>Campo año de nacimiento</td></tr>
+    <tr><td><code>create_own_email_btn.png</code></td><td>Elección email</td><td>Opción "Crear mi propio Gmail"</td></tr>
+    <tr><td><code>email_field.png</code></td><td>Formulario email</td><td>Campo de texto del email</td></tr>
+    <tr><td><code>password_field.png</code></td><td>Formulario contraseña</td><td>Campo contraseña</td></tr>
+    <tr><td><code>confirm_password_field.png</code></td><td>Formulario contraseña</td><td>Campo confirmar contraseña (si aparece)</td></tr>
+    <tr><td><code>next_btn_google.png</code></td><td>Cualquier paso</td><td>Botón "Siguiente" del flujo de Google</td></tr>
+    <tr><td><code>phone_verify_screen.png</code></td><td>Verificación</td><td>Pantalla completa de verificación por teléfono</td></tr>
+    <tr><td><code>skip_phone_btn.png</code></td><td>Verificación</td><td>Botón "Omitir" o "Ahora no" en verificación</td></tr>
+    <tr><td><code>skip_btn.png</code></td><td>Varios pasos</td><td>Botón genérico "Omitir" / "Saltar"</td></tr>
+    <tr><td><code>not_now_btn.png</code></td><td>Varios pasos</td><td>Botón "Ahora no"</td></tr>
+    <tr><td><code>agree_btn.png</code></td><td>Términos de servicio</td><td>Botón "Acepto" / "Estoy de acuerdo"</td></tr>
+    <tr><td><code>accept_btn.png</code></td><td>Términos de servicio</td><td>Alternativa al botón de aceptar</td></tr>
+    <tr><td><code>tcgp_logo.png</code></td><td>TCG Pocket - Inicio</td><td>Logo del juego en la pantalla de carga/login</td></tr>
+    <tr><td><code>sign_in_google.png</code></td><td>TCG Pocket - Login</td><td>Botón "Iniciar sesión con Google"</td></tr>
+    <tr><td><code>select_account.png</code></td><td>TCG Pocket - Login</td><td>Diálogo de selección de cuenta Google</td></tr>
+    <tr><td><code>google_account_item.png</code></td><td>Selector de cuenta</td><td>Fila de una cuenta en el selector de Google</td></tr>
+    <tr><td><code>trainer_name_field.png</code></td><td>TCG Pocket - Onboarding</td><td>Campo de texto del nombre de entrenador</td></tr>
+    <tr><td><code>confirm_trainer_btn.png</code></td><td>TCG Pocket - Onboarding</td><td>Botón confirmar nombre de entrenador</td></tr>
+    <tr><td><code>tcgp_terms_accept.png</code></td><td>TCG Pocket - ToS</td><td>Botón aceptar términos del juego</td></tr>
+    <tr><td><code>age_field.png</code></td><td>TCG Pocket - Onboarding</td><td>Campo de año de nacimiento del juego (si aparece)</td></tr>
   </table>
 
   <h3>Cómo crear las plantillas</h3>
@@ -233,7 +268,9 @@ adb devices</code></pre>
 Select a task:
 1. Farm Solo Battles
 2. Claim Missions
-3. Exit
+3. Create &amp; Link New Google Account
+4. List Created Accounts
+5. Exit
 Choice:</code></pre>
 
   <h3>3. Opciones disponibles</h3>
@@ -241,7 +278,9 @@ Choice:</code></pre>
     <tr><th>Opción</th><th>Nombre</th><th>Descripción</th><th>Pantalla inicial requerida</th></tr>
     <tr><td><code>1</code></td><td>Farm Solo Battles</td><td>Bucle infinito de batallas en solitario con auto-batalla</td><td>Selección de batalla en solitario</td></tr>
     <tr><td><code>2</code></td><td>Claim Missions</td><td>Navega a misiones y reclama todas las recompensas</td><td>Menú principal del juego</td></tr>
-    <tr><td><code>3</code></td><td>Exit</td><td>Cierra el bot</td><td>—</td></tr>
+    <tr><td><code>3</code></td><td>Create &amp; Link New Google Account</td><td>Crea una cuenta Google nueva y la vincula a TCG Pocket automáticamente</td><td>Pantalla de inicio de Android (Home)</td></tr>
+    <tr><td><code>4</code></td><td>List Created Accounts</td><td>Muestra en consola todas las cuentas creadas guardadas en <code>accounts.csv</code></td><td>—</td></tr>
+    <tr><td><code>5</code></td><td>Exit</td><td>Cierra el bot</td><td>—</td></tr>
   </table>
 
   <div class="alert alert-tip">
@@ -250,24 +289,99 @@ Choice:</code></pre>
   </div>
 </section>
 
+<!-- CREACIÓN DE CUENTA GOOGLE -->
+<section>
+  <h2><span class="icon">🔑</span> Crear cuenta Google y vincular a TCG Pocket</h2>
+  <p>La opción <strong>3 — Create &amp; Link New Google Account</strong> automatiza el proceso completo de registro: genera credenciales aleatorias, crea la cuenta en el sistema Android, abre Pokémon TCG Pocket y completa el login y onboarding sin intervención manual.</p>
+
+  <div class="alert alert-warn">
+    <span class="ico">⚠️</span>
+    <div><p><strong>Aviso</strong>Crear cuentas Google de forma automatizada puede violar los ToS de Google. Úsalo únicamente para pruebas personales. Google puede exigir verificación por número de teléfono.</p></div>
+  </div>
+
+  <h3>Flujo paso a paso</h3>
+  <ol class="steps">
+    <li><strong>Generación de credenciales</strong>El bot genera aleatoriamente nombre, apellido, dirección de Gmail y contraseña segura (mayúsculas + minúsculas + número + símbolo).</li>
+    <li><strong>Abrir Ajustes Android → Cuentas</strong>Navega automáticamente a <em>Ajustes del sistema → Cuentas → Añadir cuenta → Google</em>.</li>
+    <li><strong>Formulario de registro</strong>Rellena nombre, fecha de nacimiento, dirección de email y contraseña usando los campos detectados por template matching.</li>
+    <li><strong>Verificación por teléfono</strong>Si Google lo exige, el bot intenta omitirla automáticamente. Si no puede, <strong>pausa 120 segundos</strong> para que la completes manualmente y luego continúa.</li>
+    <li><strong>Aceptar Términos de Servicio</strong>Acepta automáticamente los ToS de Google.</li>
+    <li><strong>Guardar credenciales</strong>Guarda email y contraseña en <code>bot/accounts.csv</code> (este archivo está en <code>.gitignore</code> y nunca se sube al repositorio).</li>
+    <li><strong>Lanzar Pokémon TCG Pocket</strong>Abre el juego mediante ADB y espera la pantalla de login.</li>
+    <li><strong>Sign in with Google</strong>Toca el botón de Google, selecciona la cuenta recién creada y acepta los permisos.</li>
+    <li><strong>Onboarding del juego</strong>Introduce el nombre de entrenador (igual al nombre generado), acepta los términos del juego y salta los tutoriales automáticamente.</li>
+  </ol>
+
+  <h3>Credenciales generadas automáticamente</h3>
+  <p>Ejemplo de lo que verás en consola al ejecutar la opción 3:</p>
+  <pre><code>[*] Credenciales generadas:
+    Nombre   : Morgan Williams
+    Email    : morgan.williams84920@gmail.com
+    Password : Xqrtlbnm7!
+
+[PASO 1/3] Creando cuenta Google...
+  [A] Abriendo Ajustes de Android...
+  [B] Tocando 'Añadir cuenta'...
+  ...
+[PASO 2/3] Vinculando con Pokémon TCG Pocket...
+  ...
+[PASO 3/3] Guardando credenciales...
+  ✓ Guardado: morgan.williams84920@gmail.com [linked]
+
+[OK] Proceso completado. Credenciales en: bot/accounts.csv</code></pre>
+
+  <h3>Ver cuentas creadas (opción 4)</h3>
+  <p>Selecciona la opción <strong>4</strong> para listar todas las cuentas guardadas:</p>
+  <pre><code>Email                                    Status          Creada el
+───────────────────────────────────────────────────────────────────────────
+morgan.williams84920@gmail.com           linked          2026-05-14 11:30:00
+taylor.smith12345@gmail.com              google_only     2026-05-14 11:45:00
+
+Total: 2 cuenta(s)</code></pre>
+
+  <div class="alert alert-info">
+    <span class="ico">💡</span>
+    <div><p><strong>Status: google_only</strong>Significa que la cuenta Google se creó correctamente pero no se pudo completar el linking con TCG Pocket (p.ej. el juego no estaba instalado). Puedes intentar el paso de vinculación manualmente.</p></div>
+  </div>
+
+  <h3>Dónde se guardan las credenciales</h3>
+  <table>
+    <tr><th>Archivo</th><th>Ubicación</th><th>Seguridad</th></tr>
+    <tr><td><code>accounts.csv</code></td><td><code>bot/accounts.csv</code></td><td>Añadido a <code>.gitignore</code> — nunca se sube al repositorio</td></tr>
+  </table>
+
+  <div class="alert alert-tip">
+    <span class="ico">✅</span>
+    <div><p><strong>Recomendación</strong>Asegúrate de tener <strong>todas las templates</strong> de la sección anterior capturadas antes de ejecutar esta opción. Sin ellas el bot no podrá navegar por la UI de Android ni del juego.</p></div>
+  </div>
+</section>
+
 <!-- ESTRUCTURA -->
 <section>
   <h2><span class="icon">🗂️</span> Estructura del proyecto</h2>
   <pre><code>botTCGPOCKET/
 ├── bot/
-│   ├── main.py           # Punto de entrada: menú interactivo
-│   ├── controller.py     # Comunicación ADB (tap, swipe, screenshot)
-│   ├── vision.py         # Reconocimiento de imágenes con OpenCV
-│   ├── tasks.py          # Rutinas automatizadas
-│   ├── screenshot.py     # Herramienta para capturar pantalla
-│   └── templates/        # Imágenes de referencia (a crear por el usuario)
+│   ├── main.py            # Punto de entrada: menú interactivo (5 opciones)
+│   ├── controller.py      # Comunicación ADB (tap, swipe, texto, apps…)
+│   ├── vision.py          # Reconocimiento de imágenes con OpenCV
+│   ├── tasks.py           # Rutinas: farmeo, misiones, link cuenta
+│   ├── account_setup.py   # ★ NUEVO: creación Google + onboarding TCG Pocket
+│   ├── screenshot.py      # Herramienta para capturar pantalla
+│   ├── accounts.csv       # Credenciales creadas (gitignored)
+│   └── templates/         # Imágenes de referencia (a crear por el usuario)
 │       ├── battle_btn.png
 │       ├── auto_battle_btn.png
 │       ├── ok_btn.png
 │       ├── next_btn.png
 │       ├── missions_tab.png
-│       └── claim_all_btn.png
-├── requirements.txt      # Dependencias Python
+│       ├── claim_all_btn.png
+│       ├── google_account_btn.png
+│       ├── create_account_btn.png
+│       ├── sign_in_google.png
+│       ├── tcgp_logo.png
+│       ├── trainer_name_field.png
+│       └── … (ver tabla completa en sección Plantillas)
+├── requirements.txt       # Dependencias Python
 ├── README.md
 └── LICENSE</code></pre>
 </section>
@@ -282,6 +396,10 @@ Choice:</code></pre>
     <tr><td>Error de conexión ADB</td><td>Ejecuta <code>adb kill-server &amp;&amp; adb start-server</code> y reconecta con el puerto correcto.</td></tr>
     <tr><td><code>ModuleNotFoundError</code></td><td>Activa el entorno virtual y ejecuta <code>pip install -r requirements.txt</code>.</td></tr>
     <tr><td>La resolución del emulador cambió</td><td>Vuelve a crear todas las plantillas con la nueva resolución.</td></tr>
+    <tr><td>Google pide verificación por teléfono</td><td>El bot pausará 120 segundos. Completa la verificación manualmente en el emulador y el bot continuará solo.</td></tr>
+    <tr><td>La opción 3 se queda en "Ajustes" sin avanzar</td><td>Falta alguna template de la sección Google. Captura <code>settings_accounts.png</code>, <code>add_account_btn.png</code> y <code>google_account_btn.png</code>.</td></tr>
+    <tr><td>TCG Pocket no se abre (opción 3)</td><td>Verifica que el juego esté instalado. El package es <code>jp.pokemon.pokemontcg</code>. Comprueba con <code>adb shell pm list packages | grep pokemon</code>.</td></tr>
+    <tr><td><code>accounts.csv</code> no se crea</td><td>Asegúrate de ejecutar el bot desde la raíz del proyecto o con el entorno virtual activado.</td></tr>
   </table>
 </section>
 
