@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bot Pokémon TCG Pocket — Documentación</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap');
+  :root {
+    --bg: #0f1117; --surface: #1a1d2e; --surface2: #252840;
+    --accent: #7c6ff7; --accent2: #56cfb2; --text: #e2e8f0;
+    --muted: #8892a4; --border: #2d3250; --warn: #f59e0b; --danger: #ef4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:15px}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 24px}
+  /* HEADER */
+  header{background:linear-gradient(135deg,#1a1d2e 0%,#252840 100%);border:1px solid var(--border);border-radius:16px;padding:40px;margin-bottom:32px;position:relative;overflow:hidden}
+  header::before{content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(124,111,247,0.15),transparent);border-radius:50%}
+  header h1{font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+  header p{color:var(--muted);max-width:600px}
+  .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-right:8px;margin-top:12px}
+  .badge-purple{background:rgba(124,111,247,0.2);color:var(--accent);border:1px solid rgba(124,111,247,0.3)}
+  .badge-green{background:rgba(86,207,178,0.2);color:var(--accent2);border:1px solid rgba(86,207,178,0.3)}
+  /* PRINT BTN */
+  .print-btn{position:fixed;bottom:28px;right:28px;background:linear-gradient(135deg,var(--accent),#5b4fd4);color:#fff;border:none;padding:14px 24px;border-radius:50px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;box-shadow:0 8px 32px rgba(124,111,247,0.4);transition:transform .2s,box-shadow .2s;z-index:999;display:flex;align-items:center;gap:8px}
+  .print-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,111,247,0.5)}
+  /* SECTIONS */
+  section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:24px}
+  h2{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+  h2 .icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+  h3{font-size:.95rem;font-weight:600;color:var(--accent2);margin:20px 0 10px}
+  p{color:#c4ccd8;margin-bottom:10px}
+  /* ALERT */
+  .alert{border-radius:10px;padding:14px 18px;margin:16px 0;border-left:4px solid;display:flex;gap:12px;align-items:flex-start}
+  .alert-warn{background:rgba(245,158,11,0.1);border-color:var(--warn)}
+  .alert-info{background:rgba(124,111,247,0.1);border-color:var(--accent)}
+  .alert-tip{background:rgba(86,207,178,0.1);border-color:var(--accent2)}
+  .alert .ico{font-size:18px;flex-shrink:0;margin-top:2px}
+  .alert p{margin:0;font-size:13.5px}
+  .alert strong{display:block;margin-bottom:4px;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+  /* CODE */
+  pre{background:#0d0f1a;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;margin:12px 0}
+  code{font-family:'JetBrains Mono',monospace;font-size:13px;color:#a9d1f7}
+  p code,li code{background:#1a1d2e;border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:12px;color:var(--accent2)}
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  th{background:var(--surface2);color:var(--muted);font-weight:600;text-align:left;padding:10px 14px;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  td{padding:10px 14px;border-bottom:1px solid var(--border);color:#c4ccd8;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:rgba(255,255,255,0.02)}
+  .ok{color:var(--accent2);font-weight:600}
+  /* STEPS */
+  .steps{counter-reset:step;list-style:none;padding:0}
+  .steps li{counter-increment:step;padding:12px 16px 12px 52px;position:relative;border-left:2px solid var(--border);margin-left:16px;margin-bottom:4px}
+  .steps li::before{content:counter(step);position:absolute;left:-18px;top:10px;width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#5b4fd4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+  .steps li strong{display:block;color:var(--text);margin-bottom:4px}
+  /* ARCH */
+  .arch{background:#0d0f1a;border:1px solid var(--border);border-radius:10px;padding:20px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2;color:#a9d1f7;text-align:center}
+  .arch .layer{color:var(--accent2)}
+  /* GRID */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px}
+  .card h4{font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p{font-size:13px;color:var(--muted);margin:0}
+  /* FOOTER */
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:32px 0 16px;border-top:1px solid var(--border);margin-top:16px}
+  /* PRINT */
+  @media print {
+    body{background:#fff;color:#111;font-size:12pt}
+    .print-btn{display:none!important}
+    .wrap{max-width:100%;padding:0}
+    header{background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:24px;color:#111}
+    header h1{-webkit-text-fill-color:#333;font-size:22pt}
+    header p,.alert p,p,td,li{color:#333}
+    section{background:#fafafa;border:1px solid #ddd;border-radius:6px;padding:20px;margin-bottom:16px;break-inside:avoid}
+    h2{color:#111;border-color:#ddd}
+    h2 .icon{background:#ddd}
+    h3{color:#555}
+    pre{background:#f0f0f0;border:1px solid #ccc}
+    code{color:#333}
+    p code,li code{background:#f0f0f0;border:1px solid #ccc;color:#333}
+    th{background:#eee;color:#555}
+    td{color:#333}
+    .arch{background:#f0f0f0;color:#333}
+    .arch .layer{color:#555}
+    .alert-warn{background:#fffbeb;border-color:#f59e0b}
+    .alert-info{background:#f0f0ff;border-color:#7c6ff7}
+    .alert-tip{background:#f0fff8;border-color:#56cfb2}
+    .card{background:#f5f5f5;border:1px solid #ddd}
+    .card p,.card h4{color:#333}
+    .steps li{border-color:#ddd}
+    .steps li::before{background:#555}
+    footer{color:#888;border-color:#ddd}
+    a{color:#333;text-decoration:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <h1>🎴 Bot Pokémon TCG Pocket</h1>
+  <p>Documentación oficial de instalación, configuración y uso del bot de automatización AFK.</p>
+  <span class="badge badge-purple">Python 3.8+</span>
+  <span class="badge badge-green">OpenCV + ADB</span>
+  <span class="badge badge-purple">Código Abierto</span>
+</header>
+
+<div class="alert alert-warn">
+  <span class="ico">⚠️</span>
+  <div>
+    <p><strong>Aviso Legal</strong>Este bot viola los Términos de Servicio de Pokémon TCG Pocket. El uso puede resultar en el baneo permanente de la cuenta. Úsalo bajo tu propia responsabilidad. Proyecto con fines educativos.</p>
+  </div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<section>
+  <h2><span class="icon">⚙️</span> Cómo funciona</h2>
+  <p>El bot opera en cuatro módulos que se comunican entre sí:</p>
+  <div class="arch">
+    <span class="layer">Emulador Android</span> (BlueStacks / Nox / AVD)<br>
+    ↕ ADB (Android Debug Bridge)<br>
+    <span class="layer">ADBController</span> ↔ <span class="layer">Vision (OpenCV)</span><br>
+    ↕<br>
+    <span class="layer">BotTasks</span> (lógica de rutinas)<br>
+    ↕<br>
+    <span class="layer">main.py</span> (menú interactivo)
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card"><h4>🎮 ADBController</h4><p>Se comunica con el emulador: toma capturas, realiza taps y swipes.</p></div>
+    <div class="card"><h4>👁️ Vision</h4><p>Usa OpenCV para buscar imágenes de referencia en la pantalla del emulador.</p></div>
+    <div class="card"><h4>🤖 BotTasks</h4><p>Contiene la lógica de cada rutina: farmeo de batallas y reclamar misiones.</p></div>
+    <div class="card"><h4>🖥️ main.py</h4><p>Punto de entrada con menú interactivo en consola para seleccionar tareas.</p></div>
+  </div>
+</section>
+
+<!-- REQUISITOS -->
+<section>
+  <h2><span class="icon">📋</span> Requisitos previos</h2>
+  <table>
+    <tr><th>Componente</th><th>Descripción</th><th>Enlace</th></tr>
+    <tr><td><strong>Python 3.8+</strong></td><td>Lenguaje de programación del bot</td><td><code>python.org/downloads</code></td></tr>
+    <tr><td><strong>ADB</strong></td><td>Android Debug Bridge para controlar el emulador</td><td><code>Android SDK Platform Tools</code></td></tr>
+    <tr><td><strong>Emulador Android</strong></td><td>BlueStacks 5, Nox Player o Android Studio AVD</td><td>—</td></tr>
+    <tr><td><strong>Pokémon TCG Pocket</strong></td><td>Instalado y con sesión iniciada en el emulador</td><td>—</td></tr>
+  </table>
+  <h3>Verificar ADB instalado</h3>
+  <pre><code>adb version</code></pre>
+  <p>Deberías ver: <code>Android Debug Bridge version 1.0.41</code>. Si no, añade <code>platform-tools</code> a tu variable <code>PATH</code>.</p>
+</section>
+
+<!-- INSTALACIÓN -->
+<section>
+  <h2><span class="icon">⚙️</span> Instalación</h2>
+  <h3>1. Clonar el repositorio</h3>
+  <pre><code>git clone https://github.com/TU_USUARIO/botTCGPOCKET.git
+cd botTCGPOCKET</code></pre>
+
+  <h3>2. Crear el entorno virtual</h3>
+  <pre><code># macOS / Linux
+python3 -m venv venv
+source venv/bin/activate
+
+# Windows
+python -m venv venv
+venv\Scripts\activate</code></pre>
+
+  <h3>3. Instalar dependencias</h3>
+  <pre><code>pip install -r requirements.txt</code></pre>
+
+  <table style="margin-top:12px">
+    <tr><th>Librería</th><th>Versión</th><th>Uso</th></tr>
+    <tr><td><code>opencv-python</code></td><td>4.9.0.80</td><td>Reconocimiento de imágenes</td></tr>
+    <tr><td><code>numpy</code></td><td>1.26.4</td><td>Procesamiento de arrays de imagen</td></tr>
+    <tr><td><code>pure-python-adb</code></td><td>0.3.0.dev0</td><td>Comunicación con ADB</td></tr>
+    <tr><td><code>Pillow</code></td><td>10.3.0</td><td>Manejo de imágenes</td></tr>
+  </table>
+</section>
+
+<!-- PLANTILLAS -->
+<section>
+  <h2><span class="icon">🖼️</span> Configuración de Plantillas (Obligatorio)</h2>
+  <p>El bot usa <strong>reconocimiento de imágenes</strong>: necesita pequeños recortes de los botones del juego guardados en <code>bot/templates/</code>. Estos varían según el idioma y resolución de tu emulador, por lo que debes crearlos tú mismo.</p>
+
+  <div class="alert alert-info">
+    <span class="ico">💡</span>
+    <div><p><strong>Consejo</strong>Recorta solo el botón, sin demasiado fondo alrededor. Un recorte limpio mejora mucho la precisión del bot.</p></div>
+  </div>
+
+  <h3>Plantillas necesarias</h3>
+  <table>
+    <tr><th>Archivo</th><th>Tarea</th><th>Qué capturar</th></tr>
+    <tr><td><code>battle_btn.png</code></td><td>Farmeo</td><td>Botón para iniciar una batalla en solitario</td></tr>
+    <tr><td><code>auto_battle_btn.png</code></td><td>Farmeo</td><td>Botón de auto-batalla dentro de la partida</td></tr>
+    <tr><td><code>ok_btn.png</code></td><td>Ambas</td><td>Botón "OK" de confirmación / fin de batalla</td></tr>
+    <tr><td><code>next_btn.png</code></td><td>Farmeo</td><td>Botón "Siguiente" o "Continuar"</td></tr>
+    <tr><td><code>missions_tab.png</code></td><td>Misiones</td><td>Pestaña/icono de Misiones en el menú principal</td></tr>
+    <tr><td><code>claim_all_btn.png</code></td><td>Misiones</td><td>Botón "Reclamar Todo"</td></tr>
+  </table>
+
+  <h3>Cómo crear las plantillas</h3>
+  <ol class="steps">
+    <li><strong>Navega a la pantalla correcta</strong>Abre el emulador con el juego en la pantalla donde aparece el botón que quieres capturar.</li>
+    <li><strong>Captura la pantalla</strong>Con el entorno virtual activado, ejecuta:<pre><code>python bot/screenshot.py</code></pre>Se genera un archivo <code>screenshot_XXXXXX.png</code> en la raíz del proyecto.</li>
+    <li><strong>Recorta el botón</strong>Abre la imagen con un editor (Preview en Mac, Paint en Windows) y recorta únicamente el botón.</li>
+    <li><strong>Guarda en templates</strong>Guarda el recorte en <code>bot/templates/</code> con el nombre exacto de la tabla de arriba.</li>
+    <li><strong>Repite</strong>Realiza este proceso para cada una de las plantillas necesarias.</li>
+  </ol>
+</section>
+
+<!-- USO -->
+<section>
+  <h2><span class="icon">🚀</span> Uso del bot</h2>
+
+  <h3>1. Conectar ADB al emulador</h3>
+  <table>
+    <tr><th>Emulador</th><th>Comando</th></tr>
+    <tr><td>BlueStacks</td><td><code>adb connect 127.0.0.1:5555</code></td></tr>
+    <tr><td>Nox Player</td><td><code>adb connect 127.0.0.1:62001</code></td></tr>
+    <tr><td>Android Studio AVD</td><td>Se conecta automáticamente</td></tr>
+  </table>
+  <pre><code># Verificar dispositivos conectados
+adb devices</code></pre>
+
+  <h3>2. Ejecutar el bot</h3>
+  <p>Con el entorno virtual activado, desde la raíz del proyecto:</p>
+  <pre><code>python bot/main.py</code></pre>
+  <p>Aparecerá el menú interactivo:</p>
+  <pre><code>Initializing Pokemon TCG Pocket Bot...
+
+Select a task:
+1. Farm Solo Battles
+2. Claim Missions
+3. Exit
+Choice:</code></pre>
+
+  <h3>3. Opciones disponibles</h3>
+  <table>
+    <tr><th>Opción</th><th>Nombre</th><th>Descripción</th><th>Pantalla inicial requerida</th></tr>
+    <tr><td><code>1</code></td><td>Farm Solo Battles</td><td>Bucle infinito de batallas en solitario con auto-batalla</td><td>Selección de batalla en solitario</td></tr>
+    <tr><td><code>2</code></td><td>Claim Missions</td><td>Navega a misiones y reclama todas las recompensas</td><td>Menú principal del juego</td></tr>
+    <tr><td><code>3</code></td><td>Exit</td><td>Cierra el bot</td><td>—</td></tr>
+  </table>
+
+  <div class="alert alert-tip">
+    <span class="ico">✅</span>
+    <div><p><strong>Para detener el bot</strong>Pulsa <code>Ctrl + C</code> en la terminal en cualquier momento.</p></div>
+  </div>
+</section>
+
+<!-- ESTRUCTURA -->
+<section>
+  <h2><span class="icon">🗂️</span> Estructura del proyecto</h2>
+  <pre><code>botTCGPOCKET/
+├── bot/
+│   ├── main.py           # Punto de entrada: menú interactivo
+│   ├── controller.py     # Comunicación ADB (tap, swipe, screenshot)
+│   ├── vision.py         # Reconocimiento de imágenes con OpenCV
+│   ├── tasks.py          # Rutinas automatizadas
+│   ├── screenshot.py     # Herramienta para capturar pantalla
+│   └── templates/        # Imágenes de referencia (a crear por el usuario)
+│       ├── battle_btn.png
+│       ├── auto_battle_btn.png
+│       ├── ok_btn.png
+│       ├── next_btn.png
+│       ├── missions_tab.png
+│       └── claim_all_btn.png
+├── requirements.txt      # Dependencias Python
+├── README.md
+└── LICENSE</code></pre>
+</section>
+
+<!-- PROBLEMAS -->
+<section>
+  <h2><span class="icon">🔧</span> Solución de problemas</h2>
+  <table>
+    <tr><th>Problema</th><th>Solución</th></tr>
+    <tr><td>El bot no encuentra los botones</td><td>Recrea la plantilla con recorte más preciso. Verifica que el nombre del archivo sea exacto.</td></tr>
+    <tr><td><code>adb: command not found</code></td><td>Instala Android SDK Platform Tools y añade la carpeta al <code>PATH</code>.</td></tr>
+    <tr><td>Error de conexión ADB</td><td>Ejecuta <code>adb kill-server &amp;&amp; adb start-server</code> y reconecta con el puerto correcto.</td></tr>
+    <tr><td><code>ModuleNotFoundError</code></td><td>Activa el entorno virtual y ejecuta <code>pip install -r requirements.txt</code>.</td></tr>
+    <tr><td>La resolución del emulador cambió</td><td>Vuelve a crear todas las plantillas con la nueva resolución.</td></tr>
+  </table>
+</section>
+
+<footer>
+  <p>Bot Pokémon TCG Pocket &mdash; Proyecto de código abierto bajo licencia MIT &mdash; Solo para fines educativos</p>
+</footer>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+
+</body>
+</html>
