@@ -16,6 +16,9 @@ bot/templates/*
 *.jpg
 *.jpeg
 
+# Sensitive data - account credentials
+bot/accounts.csv
+
 # OS generated files
 .DS_Store
 .DS_Store?

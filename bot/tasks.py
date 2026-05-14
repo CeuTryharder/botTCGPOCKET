@@ -81,3 +81,17 @@ class BotTasks:
             print("Recompensas de misiones reclamadas con éxito.")
         else:
             print("No se pudo encontrar la pestaña de misiones.")
+
+    def link_google_account(self, account_setup) -> bool:
+        """
+        Crea una cuenta Google nueva y la vincula automáticamente con
+        Pokémon TCG Pocket. Delega la lógica completa en AccountSetup.
+
+        Args:
+            account_setup: Instancia de AccountSetup inicializada.
+
+        Returns:
+            True si el proceso completó con éxito, False si falló.
+        """
+        print("Iniciando creación y vinculación de cuenta Google...")
+        return account_setup.create_and_link()
